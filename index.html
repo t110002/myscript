@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="application/javascript" src="jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<!--Copyright (c) Vision Objects. This sample file for MyScript WebServices creates a writing area where handwritten equations can be entered. These strokes are then, via the myScriptMethods.js, transformed into a JSON request that is sent to the MyScript recognition server for handwriting recognition, and the result displayed back in this HTML file. The stroke capture and writing events are described in the myScriptMethods.js file, along with management of an undo/redo capability and a canvas clear. 
+You need to add you own API key in the myScriptMethods.js code, or the recognition request will be unsuccessful: you can also personalize some aspects of that code, such as the recognition language. //--> 
+<body>
+  <table width="700px">
+    <tr>
+      <td align="left" valign="middle"><a href="http://webdemo.visionobjects.com" target="_blank"><img src="images/logo_MyScript.png"></a></td>
+      <td align="right" valign="middle"><h1 style="color:#009AA8;">MyScript Cloud - Equation Sample</h1></td>
+    </tr>
+  </table>
+  
+  <img id="clear" src="images/clear.png" />
+  <img id="undo" src="images/undo_disabled.png" />
+  <img id="redo" src="images/redo_disabled.png" /><br/>
+  <canvas id="canvas" style="width:700px; height: 300px; border: 1px solid black; background-color: #FFFFBF;"> </canvas>
+  
+  
+  <img id="loading" src="images/loading.gif" /><br/>
+  Result Type :
+  <select id="resultTypes">
+    <option value="LATEX">LATEX</option>
+    <option value="MATHML">MATHML</option>
+  </select>
+  <br/>
+  <p id="result"></p>
+  
+  <script type="application/javascript" src="myScriptMethods.js"></script>
+  <script type="application/javascript">
+		$(function() {
+			var apiKey = "391d254e-da09-4bc8-8500-cbc775aaa673";
+			
+			$("#loading").hide();
+			$("#resultTypes").val("LATEX").attr("selected","selected");
+			
+			var strokes = [];
+			var strokesSave = [];
+			var options = {
+				"type" : ["LATEX"]
+			};
+				 
+			$("#canvas").addWriteHandlers(strokes, strokesSave, displayResult, options, apiKey);
+			controllerButtons(strokes, strokesSave, options, apiKey);
+		});
+  </script>
+</body>
+</html>
